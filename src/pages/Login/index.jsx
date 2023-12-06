@@ -1,31 +1,40 @@
+// Importação das bibliotecas necessárias
 import React, { useState } from 'react';
 import { Box, FormControl, InputLabel, Input, FormHelperText, Button, Snackbar } from '@mui/material';
 import MuiAlert from '@mui/material/Alert';
 
+// Definição do componente de Login, que recebe a função onLogin como propriedade
 const Login = ({ onLogin }) => {
+  const [login, setLogin] = useState('');  // Estado para o campo de login
+  const [password, setPassword] = useState('');  // Estado para o campo de senha
+  const [showAlert, setShowAlert] = useState(false);  // Estado para mostrar ou esconder a mensagem de erro
+  const [loginAttempts, setLoginAttempts] = useState(0);  // Contador de tentativas de login
   const maxLoginAttempts = 3; // Limite de tentativas
 
+  // Função chamada quando o botão de login é clicado
   const handleLogin = () => {
     if (login === 'Gilmario' && password === '123') {
-      onLogin();
+      onLogin(); // Chama a função onLogin se as credenciais estiverem corretas
     } else {
-      const remainingAttemps = maxLoginAttempts - (loginAttempts + 1);
+      const contaErros  = maxLoginAttempts - (loginAttempts + 1);
 
       // Verifica o número de tentativas restantes e fecha a página se o limite for atingido
-      if (remainingAttemps === 0) {
+      if (contaErros  === 0) {
         window.close();
       } else {
-        setLoginAttempts(loginAttempts + 1);
-        setShowAlert(true);
+        setLoginAttempts(loginAttempts + 1); // Incrementa o contador de tentativas
+        setShowAlert(true); //Mostra a mensagem de erro
       }
     }
   };
 
+  // Função chamada ao fechar a mensagem de erro
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
 
   return (
+    // Renderiza um container de Material-UI com elementos do formulário de login
     <Box
       display="flex"
       flexDirection="column"
